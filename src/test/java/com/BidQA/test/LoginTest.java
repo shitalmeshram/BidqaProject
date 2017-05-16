@@ -2,7 +2,10 @@ package com.BidQA.test;
 
 import com.BidQA.test.Data.DataGenerator;
 import com.BidQA.test.Data.DataProviderClass;
+import com.BidQA.test.Pages.BidQaHelperClass;
 import com.BidQA.test.Resources.PageResources;
+import junit.framework.ComparisonFailure;
+import org.apache.xpath.operations.String;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -15,7 +18,11 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
+
+import static org.testng.AssertJUnit.assertEquals;
+import java.lang.*;
 
 /**
  * Created by shail on 5/10/2017.
@@ -58,139 +65,69 @@ public class LoginTest {
     public void MyaccountPageTest(){
         pageResources = new PageResources(driver);
 
+        //Verifying text
+        try{
+            assertEquals("You are logged in as a Project Owner", pageResources.getMyAccountPage().GetPresentText());
+            System.out.println("Text = "+ pageResources.getMyAccountPage().GetPresentText());
+        }catch(Exception e){
+            System.err.println("assertequals fail");
+        }
+
         //Click on post new project link
         pageResources.getMyAccountPage().ClickPostNewProLink();
-
     }
 
     @Test(priority = 4)
-    public void PostNewProjectTest() throws InterruptedException {
+    public void BidQaProjectTest() throws InterruptedException {
         pageResources = new PageResources(driver);
 
-        //Enter title
+        //Verifying project information text
+        try {
+            assertEquals("Project Main Information", pageResources.getMyAccountPage().GetProjectText());
+            System.out.println("Text Present = " + pageResources.getMyAccountPage().GetProjectText());
+        } catch (Exception e) {
+            System.err.println("assertequals fail");
+        }
 
-         pageResources.getPostNewProjectPage().EnterProjectTitle();
-        // System.out.println("Project Title="+title);
-        //Enter description
-        pageResources.getPostNewProjectPage().EnterDescription();
-        Thread.sleep(5000);
-        JavascriptExecutor jse = (JavascriptExecutor)driver;
-        jse.executeScript("window.scrollBy(0,250)", "");
-        //Select category
-        pageResources.getPostNewProjectPage().SelectCategory();
-
-        JavascriptExecutor jse1 = (JavascriptExecutor)driver;
-        jse.executeScript("window.scrollBy(0,250)", "");
-        //Enter Tag
-        pageResources.getPostNewProjectPage().EnterTag();
-        //Select Skills
-        pageResources.getPostNewProjectPage().SelectSkills();
-
-        JavascriptExecutor jse2 = (JavascriptExecutor)driver;
-        jse.executeScript("window.scrollBy(0,250)", "");
-        //Select price budget
-        pageResources.getPostNewProjectPage().SelectBudget();
-
-        JavascriptExecutor jse3 = (JavascriptExecutor)driver;
-        jse.executeScript("window.scrollBy(0,250)", "");
-        //Select project ending date
-        pageResources.getPostNewProjectPage().EnterEndDate();
-        Thread.sleep(3000);
-        pageResources.getPostNewProjectPage().SelectDate();
-
-        JavascriptExecutor jse4 = (JavascriptExecutor)driver;
-        jse.executeScript("window.scrollBy(0,250)", "");
-        //Select country
-        pageResources.getPostNewProjectPage().SelectCountry();
-        Thread.sleep(3000);
-        //Select State
-        pageResources.getPostNewProjectPage().SelectState();
-        //Enter Address
-        pageResources.getPostNewProjectPage().EnterAddress();
-
-        JavascriptExecutor jse5 = (JavascriptExecutor)driver;
-        jse.executeScript("window.scrollBy(0,250)", "");
-        //Click next button1
-        pageResources.getPostNewProjectPage().ClickNextBtn1();
-        Thread.sleep(3000);
-        //Verifying Text
-       /* if(driver.getPageSource().contains("By clicking this checkbox you mark your project as featured. Extra fee is applied"))
-            System.out.println("Text is present in the page");
-        else
-            System.err.println("Text is not present in the page");*/
-        Thread.sleep(3000);
-        //Click next button1
-        pageResources.getPostNewProjectPage().ClickNextBtn2();
-        Thread.sleep(3000);
-        //Verifying Text
-        if(driver.getPageSource().contains("This is how project appears to QA engineer"))
-            System.out.println("Text is present in the page");
-        else
-            System.err.println("Text is not present in the page");
-        Thread.sleep(3000);
-        //Click next button3
-        pageResources.getPostNewProjectPage().ClickNextBtn3();
-
-        Thread.sleep(3000);
-        //Accept terms
-        pageResources.getPostNewProjectPage().ClickchkBox();
-        Thread.sleep(5000);
-        pageResources.getPostNewProjectPage().ClickPaypalBtn();
-
-    }
-    @Test(priority = 5)
-    public void PayPalPageTest() throws InterruptedException {
-        pageResources = new PageResources(driver);
+        //Calling PostNewProject from helper class
+        HashMap hashMap = BidQaHelperClass.PostNewProject(pageResources, driver);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        //switch to frame
-        //driver.switchTo().frame("injectedUl");
-        //out of all frames
-        driver.switchTo().defaultContent();
-        //switch to frame
-        driver.switchTo().frame("injectedUl");
-        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-        pageResources.getPayPalPage().EnterEmail();
-        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-        pageResources.getPayPalPage().EnterPwd();
-        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-        pageResources.getPayPalPage().ClickLogInBtn();
-        driver.switchTo().defaultContent();
-       // Thread.sleep(5000);
-
-        JavascriptExecutor jse = (JavascriptExecutor)driver;
-        jse.executeScript("window.scrollBy(0,250)", "");
-        //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        Thread.sleep(12000);
-        pageResources.getPayPalPage().ClickPayNowBtn();
-
-        JavascriptExecutor jse6 = (JavascriptExecutor)driver;
-        jse.executeScript("window.scrollBy(0,250)", "");
-        //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        Thread.sleep(12000);
-        pageResources.getPayPalPage().ClickReTomerchant();
-
-        WebElement result = driver.findElement(By.xpath("//div[@class='mm_inn mm_inn21']"));
-        Assert.assertTrue(true, String.valueOf(result));
-        title= result.getText();
-        System.out.println("Project title is :"+title);
+        // Calling Paypal method from helper calss
+        BidQaHelperClass.PayPal(pageResources, driver);
 
         //Logout
         //Click on logout link
         pageResources.getLogoutPage().ClickLogoutLink();
 
+        //Calling QA Login Method from helper call
+        BidQaHelperClass.QaLogin(pageResources, driver);
+
+        //Caliing QaBiddingProject method from helper class
+        BidQaHelperClass.QaBiddingProject(pageResources, driver, hashMap);
+
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        //Verify Status
+        try {
+            java.lang.String statusText = pageResources.getQaBiddingProjectPage().GetStatusText();
+            assertEquals("Congratulations!", statusText);
+            System.out.println("Text Present = " + statusText);
+        } catch (Exception e) {
+            System.err.println("assertequals fail");
+        }
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        //Click Ok Btn
+        pageResources.getQaBiddingProjectPage().ClickOkBtn();
+
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        //Click on logout link
+        pageResources.getLogoutPage().ClickLogoutLink();
+
+
     }
 
-    @Test(priority = 6)
-    public void QaLoginTest(){
-        PageResources pageResources = new PageResources(driver);
-        //Click Login button
-        pageResources.getQaLoginPage().ClickLoginBtn();
-        //Enter username
-        pageResources.getQaLoginPage().EnterUserName();
-        //Enter Password
-        pageResources.getQaLoginPage().EnterPwd();
 
-    }
+
+
     @AfterClass
     public void afterClass() throws InterruptedException {
         //Close the browser

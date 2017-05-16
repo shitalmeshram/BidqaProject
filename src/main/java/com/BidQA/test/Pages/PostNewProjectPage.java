@@ -30,11 +30,16 @@ public class PostNewProjectPage {
     private WebElement enterProTitle;
 
     //Define project title Method
-    public void EnterProjectTitle()
+    /*public void EnterProjectTitle()
     {
       enterProTitle.sendKeys(dataGenerator.randomTitleChars);
         //return enterProTitle;
 
+    }
+*/
+    public String EnterProjectTitle(String title){
+        enterProTitle.sendKeys(title);
+        return dataGenerator.randomTitleChars;
     }
     //Define description
     @FindBy(how= How.XPATH, using="//textarea[@name='project_description']")

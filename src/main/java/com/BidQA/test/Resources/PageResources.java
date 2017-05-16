@@ -16,6 +16,8 @@ public class PageResources {
     LogoutPage logoutPage;
     QaLoginPage qaLoginPage;
 
+    QaBiddingProjectPage qaBiddingProjectPage;
+
        public PageResources(WebDriver driver) {
         this.driver = driver;
         homePage = new HomePage(driver);
@@ -25,6 +27,7 @@ public class PageResources {
         payPalPage = new PayPalPage(driver);
         logoutPage = new LogoutPage(driver);
         qaLoginPage = new QaLoginPage(driver);
+        qaBiddingProjectPage = new QaBiddingProjectPage(driver);
 
     }
     public HomePage getHomePage() {
@@ -48,5 +51,8 @@ public class PageResources {
     }
     public QaLoginPage getQaLoginPage() {
         return qaLoginPage;
+    }
+    public QaBiddingProjectPage getQaBiddingProjectPage() {
+        return qaBiddingProjectPage;
     }
 }

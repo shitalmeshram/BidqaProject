@@ -27,21 +27,7 @@ public class QaLoginPage {
     public void ClickLoginBtn(){
         loginBtn.click();
     }
-   /* public WebElement loginBtn() {
-        return driver.findElement(By.xpath("//a[@href='http://test.bidqa.com/wp-login.php']"));
-    }
 
-        public WebElement enterUname(){
-            return driver.findElement(By.xpath("//input[@id='log']"));
-        }
-
-        public WebElement enterPwd(){
-            return driver.findElement(By.xpath("//input[@id='login_password']"));
-        }*/
-
-       // public WebElement loginBtn(){
-         //   return driver.findElement(By.name("wp-submit"));
-       // }
 
    //Define Username
     @FindBy(how= How.XPATH, using="//input[@id='log']")
@@ -51,6 +37,10 @@ public class QaLoginPage {
     @FindBy(how= How.XPATH, using="//input[@id='login_password']")
     private WebElement enterPwd;
 
+    //Define Sign in btn
+    @FindBy(how= How.XPATH, using="//input[@class='submit_bottom']")
+    private WebElement signInBtn;
+
     //Define username method
     public void EnterUserName(){
         enterUname.sendKeys("minnie");
@@ -58,6 +48,10 @@ public class QaLoginPage {
     //Define password method
     public void EnterPwd(){
         enterPwd.sendKeys("1234");
+    }
+    //Define Sign in method
+    public void ClickSignBtn(){
+        signInBtn.click();
     }
 
 }

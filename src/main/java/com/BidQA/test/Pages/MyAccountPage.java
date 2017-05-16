@@ -25,4 +25,19 @@ public class MyAccountPage {
     {
         postNewProLink.click();
     }
+
+    @FindBy(how= How.TAG_NAME, using="h3")
+    private WebElement projectText;
+
+    public String GetProjectText(){
+        return projectText.getText();
+    }
+
+    @FindBy(how= How.XPATH, using="//li[@class='user_type']")
+    private WebElement textPresent;
+
+    public String GetPresentText(){
+        return textPresent.getText();
+    }
+
 }
