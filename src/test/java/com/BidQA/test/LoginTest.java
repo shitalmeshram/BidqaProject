@@ -48,7 +48,7 @@ public class LoginTest {
    @Test(priority = 1)
     public void HomePageTest() {
         pageResources = new PageResources(driver);
-        // Click Register link
+        // Click Login link
         pageResources.getHomePage().ClickLoginLink();
     }
     @Test(priority = 2)
@@ -65,10 +65,11 @@ public class LoginTest {
     public void MyaccountPageTest(){
         pageResources = new PageResources(driver);
 
-        //Verifying text
+        //Verifying that logged in as a Project Owner
         try{
-            assertEquals("You are logged in as a Project Owner", pageResources.getMyAccountPage().GetPresentText());
-            System.out.println("Text = "+ pageResources.getMyAccountPage().GetPresentText());
+            java.lang.String poTitle =  pageResources.getMyAccountPage().GetPresentText();
+            assertEquals("You are logged in as a Project Owner",poTitle);
+            System.out.println("Text = "+ poTitle);
         }catch(Exception e){
             System.err.println("assertequals fail");
         }
@@ -83,8 +84,9 @@ public class LoginTest {
 
         //Verifying project information text
         try {
-            assertEquals("Project Main Information", pageResources.getMyAccountPage().GetProjectText());
-            System.out.println("Text Present = " + pageResources.getMyAccountPage().GetProjectText());
+            java.lang.String infoText =  pageResources.getMyAccountPage().GetProjectText();
+            assertEquals("Project Main Information",infoText);
+            System.out.println("Text Present = " + infoText);
         } catch (Exception e) {
             System.err.println("assertequals fail");
         }
@@ -102,6 +104,16 @@ public class LoginTest {
         //Calling QA Login Method from helper call
         BidQaHelperClass.QaLogin(pageResources, driver);
 
+        //Verify that logged in as a QA Engineer
+        try{
+            java.lang.String qaTitle = pageResources.getQaLoginPage().GetPresentText();
+            assertEquals("You are logged in as a QA Engineer",qaTitle);
+            System.out.println("Text = "+qaTitle );
+        }catch(Exception e){
+            System.err.println("assertequals fail");
+        }
+
+
         //Caliing QaBiddingProject method from helper class
         BidQaHelperClass.QaBiddingProject(pageResources, driver, hashMap);
 
@@ -110,19 +122,61 @@ public class LoginTest {
         try {
             java.lang.String statusText = pageResources.getQaBiddingProjectPage().GetStatusText();
             assertEquals("Congratulations!", statusText);
-            System.out.println("Text Present = " + statusText);
+            System.out.println("Status = " + statusText);
         } catch (Exception e) {
             System.err.println("assertequals fail");
         }
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         //Click Ok Btn
         pageResources.getQaBiddingProjectPage().ClickOkBtn();
 
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         //Click on logout link
         pageResources.getLogoutPage().ClickLogoutLink();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
+    }
+    @Test(priority = 5)
+    public void SelectWinnerTest() throws InterruptedException {
+        //Login as a Project Owner
+        pageResources = new PageResources(driver);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        // Click Login link
+        pageResources.getHomePage().ClickLoginLink();
+        //Enter username
+        pageResources.getRegisterationPage().EnterUserName();
+        //Enter pwd
+        pageResources.getRegisterationPage().EnterPwd();
+        //Click Sign In button
+        pageResources.getRegisterationPage().ClickSignInBtn();
+        //Click project name
+        pageResources.getSelectWinnerPage().ClickProjectName();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        JavascriptExecutor jse = (JavascriptExecutor)driver;
+        jse.executeScript("window.scrollBy(0,250)", "");
+        //click on select as winner
+        pageResources.getSelectWinnerPage().ClickSelectWinner();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        //click on Choose a winner Btn
+        pageResources.getSelectWinnerPage().ChooseWinnerBtn();
+/*
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        JavascriptExecutor jse1 = (JavascriptExecutor)driver;
+        jse.executeScript("window.scrollBy(0,250)", "");
 
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        //Verify Status
+        try {
+            java.lang.String statusText = pageResources.getSelectWinnerPage().GetStatus();
+            assertEquals(" Project Winner", statusText);
+            System.out.println("This QA Engineer is marked as a "+statusText);
+        } catch (Exception e) {
+            System.err.println("assertequals fail");
+        }*/
+
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        //Click on logout link
+        pageResources.getLogoutPage().ClickLogoutLink();
     }
 
 

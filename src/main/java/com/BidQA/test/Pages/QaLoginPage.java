@@ -54,4 +54,12 @@ public class QaLoginPage {
         signInBtn.click();
     }
 
+    //Verify text present
+    @FindBy(how= How.XPATH, using="//li[@class='user_type']")
+    private WebElement textPresent;
+
+    public String GetPresentText(){
+        return textPresent.getText();
+    }
+
 }

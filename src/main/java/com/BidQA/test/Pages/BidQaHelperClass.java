@@ -21,8 +21,6 @@ public class BidQaHelperClass {
         //Enter title
         String title = dataGenerator.randomTitleChars;
 
-
-
         //To use title for next test
         hashMap.put("Title",title);
         pageResources.getPostNewProjectPage().EnterProjectTitle(title);
