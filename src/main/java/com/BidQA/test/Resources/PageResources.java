@@ -17,6 +17,7 @@ public class PageResources {
     QaLoginPage qaLoginPage;
     SelectWinnerPage selectWinnerPage;
     QaBiddingProjectPage qaBiddingProjectPage;
+    ProjectProgressPage projectProgressPage;
 
        public PageResources(WebDriver driver) {
         this.driver = driver;
@@ -29,6 +30,7 @@ public class PageResources {
         qaLoginPage = new QaLoginPage(driver);
         qaBiddingProjectPage = new QaBiddingProjectPage(driver);
         selectWinnerPage = new SelectWinnerPage(driver);
+        projectProgressPage = new ProjectProgressPage(driver);
 
 
     }
@@ -59,5 +61,8 @@ public class PageResources {
     }
     public SelectWinnerPage getSelectWinnerPage() {
         return selectWinnerPage;
+    }
+    public ProjectProgressPage getProjectProgressPage() {
+        return projectProgressPage;
     }
 }

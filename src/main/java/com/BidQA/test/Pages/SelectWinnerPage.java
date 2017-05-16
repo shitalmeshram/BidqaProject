@@ -42,7 +42,7 @@ public class SelectWinnerPage {
 
     //define status field
    // @FindBy(how= How.XPATH, using="//i[@class='bid-flag']")
-    @FindBy(how= How.XPATH, using=".//*[@id='my_bids']/div/div[5]")
+    @FindBy(how= How.XPATH, using="//*[@id=\"my_bids\"]/div/div[6]")
     private WebElement statusText;
 
     public String GetStatus(){

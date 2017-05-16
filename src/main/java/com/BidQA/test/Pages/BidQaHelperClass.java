@@ -93,6 +93,7 @@ public class BidQaHelperClass {
 
     public static void PayPal(PageResources pageResources,WebDriver driver) throws InterruptedException {
         pageResources = new PageResources(driver);
+        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         //out of all frames
         driver.switchTo().defaultContent();
         //switch to frame
@@ -130,6 +131,19 @@ public class BidQaHelperClass {
         //Click Sign Btn
         pageResources.getQaLoginPage().ClickSignBtn();
     }
+    public static void PoLogin(PageResources pageResources,WebDriver driver){
+        //Login as a Project Owner
+        pageResources = new PageResources(driver);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        // Click Login link
+        pageResources.getHomePage().ClickLoginLink();
+        //Enter username
+        pageResources.getRegisterationPage().EnterUserName();
+        //Enter pwd
+        pageResources.getRegisterationPage().EnterPwd();
+        //Click Sign In button
+        pageResources.getRegisterationPage().ClickSignInBtn();
+    }
 
     public static void QaBiddingProject(PageResources pageResources,WebDriver driver,HashMap hashMap){
         pageResources = new PageResources(driver);
@@ -155,5 +169,14 @@ public class BidQaHelperClass {
         pageResources.getQaBiddingProjectPage().ClickChkBox();
         //Click place bid button
         pageResources.getQaBiddingProjectPage().ClickPlaceBidBtn();
+    }
+
+    public static void ProjectInProgress(PageResources pageResources,WebDriver driver){
+        pageResources = new PageResources(driver);
+
+        //Click start work timer button
+        pageResources.getProjectProgressPage().ClickStartBtn();
+
+
     }
 }
