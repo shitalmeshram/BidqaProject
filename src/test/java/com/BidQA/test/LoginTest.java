@@ -199,7 +199,7 @@ public class LoginTest {
 */
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
-        JavascriptExecutor jse2 = (JavascriptExecutor) driver;
+        JavascriptExecutor jse1 = (JavascriptExecutor) driver;
         jse.executeScript("window.scrollBy(0,250)", "");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         //Click on project in progress link
@@ -209,6 +209,7 @@ public class LoginTest {
         java.lang.String title = (java.lang.String) hashMap.get("Title");
         //Define project name field
         List<WebElement> myList = driver.findElements(By.xpath("//div[@class='padd10']//a[contains(@href,'http://test.bidqa.com/projects/bbox')]"));
+
 
         int counter = 0;
         for (WebElement myElement : myList) {
@@ -309,11 +310,70 @@ public class LoginTest {
             } else {
                 System.out.println("Project not found");
 
-
             }
         }
 
-        }
+
+        //---------------------------------Project Owner Release Payment --------------------
+
+        //Click on Finance Link
+        pageResources.getMakePaymentPage().ClickFinanceLink();
+
+        JavascriptExecutor jse2 = (JavascriptExecutor) driver;
+        jse.executeScript("window.scrollBy(0,500)", "");
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+
+        JavascriptExecutor jse3 = (JavascriptExecutor) driver;
+        jse.executeScript("window.scrollBy(0,300)", "");
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+            //Define project name to release payment
+            //List<WebElement> myList2 = driver.findElements(By.xpath("html/body/div[3]/div[4]/div/div[1]/div[11]/div[2]/table/tbody/tr[2]/td[2]/a"));
+            List<WebElement> myList2 = driver.findElements(By.xpath("//a[contains(@href,'http://test.bidqa.com/projects/bbox')]"));
+
+            int counter2 = 0;
+            for (WebElement myElement2 : myList2) {
+
+                counter2++;
+
+                java.lang.String myProject2 = myElement2.getText();
+                System.out.println("Project Name =" + myProject2);
+
+                // If Project title matches the desired project then proceed
+                if (myProject2.contains(title)) {
+
+                    System.out.println(counter2);
+
+                    // Click on Release Payment button
+                    driver.findElements(By.xpath("//a[contains(@href,'http://test.bidqa.com/my-account/finances/?pg=releasepayment&id=')]")).get(counter - 1).click();
+                    Thread.sleep(3000);
+
+                    break;
+
+                } else {
+                    System.out.println("Project not found");
+
+                }
+            }
+
+        //Verifying that Payment Transactin is Completed
+        /*try{
+            java.lang.String presentText =  pageResources.getMakePaymentPage().GetPaymentTransactionText();
+            assertEquals("Payment Transactions",presentText);
+            System.out.println( presentText+" Completed!");
+        }catch(Exception e){
+            System.err.println("assertequals fail");
+        }*/
+
+        java.lang.String presentText =  pageResources.getMakePaymentPage().GetPaymentTransactionText();
+        Assert.assertTrue(true,presentText);
+        Assert.assertTrue(presentText.contains("Payment Transactions"));
+        System.out.println(presentText+" Completed!");
+
+        //Project Owner Click on logout link
+        pageResources.getLogoutPage().ClickLogoutLink();
+
+    }
 
 
 

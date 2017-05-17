@@ -85,4 +85,21 @@ public class MakePaymentPage {
     {
         makeEscrowBtn.click();
     }
+
+    //Define Finance Link
+    @FindBy(how= How.XPATH, using="//ul[@id='my-account-admin-menu']//a[@href='http://test.bidqa.com/my-account/finances/']")
+    private WebElement financeLink;
+
+    //Define Finance Link  Method
+    public void ClickFinanceLink()
+    {
+        financeLink.click();
+    }
+    //Define 'Payment transactions' completed
+    @FindBy(how= How.XPATH, using="//div[@class='box_title']")
+    private WebElement textPresent;
+
+    public String GetPaymentTransactionText(){
+        return textPresent.getText();
+    }
 }
