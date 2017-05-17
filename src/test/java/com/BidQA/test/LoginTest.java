@@ -120,7 +120,7 @@ public class LoginTest {
         //Caliing QaBiddingProject method from helper class
         BidQaHelperClass.QaBiddingProject(pageResources, driver, hashMap);
 
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+       /* driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         //Verify Status
         try {
             java.lang.String statusText = pageResources.getQaBiddingProjectPage().GetStatusText();
@@ -131,9 +131,9 @@ public class LoginTest {
         }
         //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         //Click Ok Btn
-        pageResources.getQaBiddingProjectPage().ClickOkBtn();
+        pageResources.getQaBiddingProjectPage().ClickOkBtn();*/
 
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         //Click on logout link
         pageResources.getLogoutPage().ClickLogoutLink();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -218,28 +218,28 @@ public class LoginTest {
             java.lang.String myProject = myElement.getText();
             System.out.println(myProject);
 
-            //2. If Project title matches the desired project then proceed
+            // If Project title matches the desired project then proceed
             if (myProject.contains(title)) {
 
                 System.out.println(counter);
 
-                //a. Click on 'Start Work Timer' button
+                // Click on 'Start Work Timer' button
                 driver.findElements(By.xpath("//div[@class='padd10']//button[@class='work_timer green_btn']")).get(counter - 1).click();
                 Thread.sleep(3000);
-                //b. Then click on 'Accept' checkbox
+                // Then click on 'Accept' checkbox
                 driver.findElements(By.xpath("//input[@type='checkbox']")).get(counter - 1).click();
                 Thread.sleep(3000);
-                //c. Then click on 'Ok' button
+                // Then click on 'Ok' button
                 driver.findElements(By.xpath("//input[@value='ok']")).get(counter - 1).click();
-                //d. Wait for 10 seconds to finish work
+                // Wait for 10 seconds to finish work
                 Thread.sleep(10000);
-                //e. After 10 seconds stop timer
+                // After 10 seconds stop timer
                 driver.findElements(By.xpath("//button[@act='stop']")).get(counter - 1).click();
                 Thread.sleep(3000);
-                //f. Then click on 'Mark Delivered' button
+                // Then click on 'Mark Delivered' button
                 driver.findElements(By.xpath("//a[@class='green_btn']")).get(counter - 1).click();
                 driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-                //g. Then click on 'Yes, Mark Delivered!' button
+                // Then click on 'Yes, Mark Delivered!' button
                 pageResources.getProjectProgressPage().ClickYesBtn();
 
                 break;
@@ -248,6 +248,69 @@ public class LoginTest {
                 System.out.println("Project not found");
             }
 
+        }
+        //QA Engineer Click on logout link
+        pageResources.getLogoutPage().ClickLogoutLink();
+
+        //-------------------------Project Owner making payment---------------------------
+        //Calling PO Login Method from helper call, Login as a project owner
+        BidQaHelperClass.PoLogin(pageResources, driver);
+        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+        //Click on Awaiting Completion link
+        pageResources.getMakePaymentPage().ClickAwaitingLink();
+
+        //Define project name to make payment
+        List<WebElement> myList1 = driver.findElements(By.xpath("//div[@class='padd10']//a[contains(@href,'http://test.bidqa.com/projects/bbox')]"));
+
+        int counter1 = 0;
+        for (WebElement myElement1 : myList1) {
+
+            counter1++;
+
+            java.lang.String myProject1 = myElement1.getText();
+            System.out.println("Project Name =" + myProject1);
+
+            // If Project title matches the desired project then proceed
+            if (myProject1.contains(title)) {
+
+                System.out.println(counter1);
+
+                // Click on 'Mark Completed button to accept the project
+                driver.findElements(By.xpath("//a[@class='green_btn inline-block']")).get(counter - 1).click();
+                Thread.sleep(3000);
+                //Click on Yes,Mark Completed button
+                pageResources.getMakePaymentPage().ClickYesMarkBtn();
+                Thread.sleep(3000);
+                //Click on Make Escrow Button
+                pageResources.getMakePaymentPage().ClickEscrowBtn();
+                Thread.sleep(3000);
+                //Enter Escrow Amount to make Escrow payment
+                pageResources.getMakePaymentPage().EnterEscrowAmount();
+                //Select Escrow for Project from dropdown
+                WebElement selectProject = driver.findElement(By.xpath("//select[@name='projectss']"));
+                //Select Escrow for project  from dropdown
+                Select project = new Select(selectProject);
+                project.selectByVisibleText(title);
+                System.out.println("Project Name ="+title);
+                Thread.sleep(2000);
+                //Enter Escrow for QA Engineer
+                WebElement selectEngineer = driver.findElement(By.xpath("//select[@name='uids']"));
+                //Select Escrow for project  from dropdown
+                Select name = new Select(selectEngineer);
+                name.selectByVisibleText("minnie");
+                System.out.println("QA Engineer Name ="+name);
+                Thread.sleep(2000);
+                //Click Make Escrow Btn
+                pageResources.getMakePaymentPage().ClickMakeEscrowBtn();
+                Thread.sleep(2000);
+
+                break;
+
+            } else {
+                System.out.println("Project not found");
+
+
+            }
         }
 
         }
